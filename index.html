@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodrigo Silva | Data Analyst</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* =========================
+           VARIÁVEIS DE DESIGN
+           ========================= */
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --card-bg: rgba(18, 18, 18, 0.7);
+            --card-bg-solid: #121212;
+            --card-hover: rgba(22, 22, 22, 0.85);
+
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-tertiary: #6b6b6b;
+
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --accent-soft: rgba(56, 189, 248, 0.08);
+            --accent-2: #818cf8;
+            --accent-3: #c084fc;
+
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(56, 189, 248, 0.3);
+
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.15);
+
+            --gradient-accent: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            --gradient-text: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+            --gradient-card: linear-gradient(145deg, rgba(18,18,18,0.9) 0%, rgba(10,10,10,0.95) 100%);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* =========================
+           RESET & BASE
+           ========================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fundo com gradientes sutis animados */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.03) 0%, transparent 60%);
+            z-index: -1;
+            animation: bgFloat 25s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-3%, 3%) rotate(120deg); }
+            66% { transform: translate(3%, -3%) rotate(240deg); }
+        }
+
+        /* =========================
+           CONTAINER
+           ========================= */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================
+           HEADER / HERO
+           ========================= */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2.5rem;
+            padding: 2.5rem;
+            background: var(--gradient-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.6;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .profile-section {
+            position: relative;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .profile-pic-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+
+        .profile-pic-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+            animation: ringRotate 8s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes ringRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-pic {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--card-bg-solid);
+            border: 4px solid var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 4rem;
+            box-shadow: var(--shadow-glow);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-status {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: #22c55e;
+            border: 4px solid var(--bg-primary);
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+        }
+
+        .profile-status::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: #22c55e;
+            opacity: 0.4;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.4); opacity: 0; }
+        }
+
+        .hero-info {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-greeting {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.9rem;
+            background: var(--accent-soft);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hero-greeting .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero-name {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-role {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .role-divider {
+            color: var(--text-tertiary);
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+            max-width: 700px;
+            line-height: 1.7;
+            font-size: 1.02rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-desc strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(56,189,248,0.15), transparent);
+            transition: left 0.6s;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-btn i {
+            font-size: 1rem;
+        }
+
+        /* =========================
+           LAYOUT GRID
+           ========================= */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* =========================
+           CARDS
+           ========================= */
+        .card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56,189,248,0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md), 0 0 30px rgba(56,189,248,0.08);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.3px;
+        }
+
+        .card-title i {
+            color: var(--accent);
+            font-size: 1.05rem;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-soft);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 0 12px rgba(56,189,248,0.2);
+        }
+
+        .card-text {
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        .card-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .card-text b {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* =========================
+           TIMELINE
+           ========================= */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(56,189,248,0.2) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.75rem;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border: 3px solid var(--bg-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-glow), 0 0 0 1px var(--accent);
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px var(--accent), 0 0 0 1px var(--accent);
+        }
+
+        .job-title {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.2px;
+        }
+
+        .company-name {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.88rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .company-name i {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .job-period {
+            display: inline-block;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255,255,255,0.04);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            margin-bottom: 0.7rem;
+        }
+
+        .job-desc {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* =========================
+           PROJETOS
+           ========================= */
+        .projects-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .projects-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            background: rgba(255,255,255,0.04);
+            padding: 0.25rem 0.7rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .projects-count strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            background: rgba(56, 189, 248, 0.04);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 20px rgba(56,189,248,0.08);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-name {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            line-height: 1.2;
+        }
+
+        .project-icon {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-soft);
+            border-radius: var(--radius-sm);
+            color: var(--accent);
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-icon {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .project-external {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-external {
+            color: var(--accent);
+            transform: rotate(-45deg);
+        }
+
+        .project-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0 0 0.85rem 0;
+            line-height: 1.55;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-tertiary);
+            background: rgba(255,255,255,0.03);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-link {
+            font-size: 0.78rem;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+        }
+
+        .project-link:hover {
+            gap: 0.55rem;
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* =========================
+           SKILLS TAGS
+           ========================= */
+        .skills-section + .skills-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .skills-section-title {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skills-section-title i {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tech-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.85rem;
+            background: var(--accent-soft);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: default;
+            position: relative;
+        }
+
+        .tech-tag::before {
+            content: '#';
+            opacity: 0.5;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .tech-tag:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 16px var(--accent-glow);
+        }
+
+        .tech-tag:hover::before {
+            opacity: 1;
+        }
+
+        /* Soft skills com cor diferente */
+        .skills-section.soft .tech-tag {
+            background: rgba(192, 132, 252, 0.06);
+            border-color: rgba(192, 132, 252, 0.25);
+            color: var(--accent-3);
+        }
+
+        .skills-section.soft .tech-tag:hover {
+            background: var(--accent-3);
+            color: #000;
+            border-color: var(--accent-3);
+            box-shadow: 0 6px 16px rgba(192, 132, 252, 0.4);
+        }
+
+        .skills-section.soft .skills-section-title i {
+            color: var(--accent-3);
+        }
+
+        /* =========================
+           FORMAÇÃO
+           ========================= */
+        .education-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .education-item + .education-item {
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .education-degree {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .education-degree i {
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .education-school {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .education-period {
+            color: var(--text-tertiary);
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .education-period .status-badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 0.1rem 0.5rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        /* =========================
+           IDIOMAS
+           ========================= */
+        .language-item {
+            margin-bottom: 1rem;
+        }
+
+        .language-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .language-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .language-name {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-name i {
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .language-level {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .language-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .language-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 100px;
+            box-shadow: 0 0 10px var(--accent-glow);
+            position: relative;
+            animation: fillBar 1.2s ease-out;
+        }
+
+        .language-bar-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2.5s ease-in-out infinite;
+        }
+
+        @keyframes fillBar {
+            from { width: 0 !important; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* =========================
+           FOOTER
+           ========================= */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-heart {
+            color: var(--accent);
+        }
+
+        .footer-tech {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-tech span {
+            color: var(--accent);
+        }
+
+        /* =========================
+           ANIMAÇÃO DE ENTRADA
+           ========================= */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.7s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero {
+                padding: 1.75rem;
+                gap: 1.5rem;
+            }
+
+            .profile-pic-wrapper,
+            .profile-pic {
+                width: 130px;
+                height: 130px;
+            }
+
+            .profile-pic {
+                font-size: 3rem;
+            }
+
+            .hero-name {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .hero-greeting,
+            .hero-role {
+                justify-content: center;
+            }
+
+            .contact-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* =========================
+           PRINT STYLES
+           ========================= */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            body::before, body::after {
+                display: none !important;
+            }
+
+            .card, .hero {
+                background: white !important;
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+            }
+
+            .hero-name, .job-title, .education-degree, .card-title {
+                color: black !important;
+                -webkit-text-fill-color: black !important;
+            }
+
+            .card-text, .job-desc {
+                color: #333 !important;
+            }
+
+            .tech-tag {
+                background: #f0f0f0 !important;
+                color: #333 !important;
+                border-color: #ccc !important;
+            }
+
+            .contact-btn {
+                border: 1px solid #ccc !important;
+                color: black !important;
+            }
+
+            .footer {
+                display: none;
+            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 100px;
+            border: 2px solid var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Seleção de texto */
+        ::selection {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* =========================
+           BOTÃO DE IDIOMA (FLOATING)
+           ========================= */
+        .lang-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--gradient-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .lang-toggle .flag {
+            font-size: 1.05rem;
+            line-height: 1;
+        }
+
+        .lang-toggle .lang-current {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .lang-toggle .lang-divider {
+            color: var(--text-tertiary);
+            margin: 0 0.15rem;
+        }
+
+        .lang-toggle .lang-other {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* =========================
+           BOTÃO DE UPLOAD DE FOTO
+           ========================= */
+        .photo-upload-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .photo-upload-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            color: #000;
+            border: 3px solid var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            z-index: 5;
+            box-shadow: 0 4px 12px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        .photo-upload-btn:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 6px 18px var(--accent-glow);
+        }
+
+        .photo-upload-btn input[type="file"] {
+            display: none;
+        }
+
+        .photo-hint {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            padding: 0.25rem 0.7rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 10;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .photo-hint::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid var(--accent);
+        }
+
+        .photo-upload-wrapper:hover .photo-hint {
+            opacity: 1;
+            top: -14px;
+        }
+
+        /* =========================
+           TOAST NOTIFICATION
+           ========================= */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background: var(--gradient-card);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 0.85rem 1.4rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            color: var(--accent);
+        }
+
+        @media (max-width: 480px) {
+            .lang-toggle {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.72rem;
+            }
+
+            .lang-toggle .flag {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão flutuante de troca de idioma -->
+    <button class="lang-toggle" id="langToggle" title="Switch language / Trocar idioma">
+        <span class="flag" id="langFlag">🇧🇷</span>
+        <span class="lang-current" id="langCurrent">PT</span>
+        <span class="lang-divider">|</span>
+        <span class="lang-other" id="langOther">EN</span>
+    </button>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <div class="container">
+
+        <!-- ===========================
+             HERO / HEADER
+             =========================== -->
+        <header class="hero fade-in">
+            <div class="profile-section">
+                <div class="photo-upload-wrapper">
+                    <div class="profile-pic-wrapper">
+                        <div class="profile-pic-ring"></div>
+                        <div class="profile-pic" id="profilePic">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-status" title="Disponível para oportunidades"></div>
+                    </div>
+                    <span class="photo-hint" data-pt="Enviar foto" data-en="Upload photo">Enviar foto</span>
+                    <label class="photo-upload-btn" title="Enviar foto / Upload photo">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" id="photoInput" accept="image/*">
+                    </label>
+                </div>
+            </div>
+
+            <div class="hero-info">
+                <div class="hero-greeting">
+                    <span class="dot"></span>
+                    <span data-pt="DISPONÍVEL PARA OPORTUNIDADES" data-en="OPEN TO OPPORTUNITIES">DISPONÍVEL PARA OPORTUNIDADES</span>
+                </div>
+                <h1 class="hero-name">RODRIGO SILVA</h1>
+                <div class="hero-role">
+                    <span data-pt="ANALISTA DE DADOS" data-en="DATA ANALYST">ANALISTA DE DADOS</span>
+                    <span class="role-divider">|</span>
+                    <span>PYTHON</span>
+                    <span class="role-divider">|</span>
+                    <span data-pt="ESPECIALISTA EM BI" data-en="BI SPECIALIST">BI SPECIALIST</span>
+                </div>
+                <p class="hero-desc" data-pt="Transformando dados complexos em decisões estratégicas. Especialista em construir narrativas de dados através de <strong>Dashboards interativos</strong>, automação inteligente e <strong>Machine Learning</strong> aplicado ao negócio." data-en="Turning complex data into strategic decisions. Specialist in building data narratives through <strong>interactive dashboards</strong>, smart automation, and <strong>Machine Learning</strong> applied to business.">
+                    Transformando dados complexos em decisões estratégicas. Especialista em construir narrativas de dados através de <strong>Dashboards interativos</strong>, automação inteligente e <strong>Machine Learning</strong> aplicado ao negócio.
+                </p>
+                <div class="contact-buttons">
+                    <a href="https://www.linkedin.com/in/rodrigo-s-45724116a/" target="_blank" rel="noopener" class="contact-btn">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/RodrigoDSVDF" target="_blank" rel="noopener" class="contact-btn">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="mailto:rodrigo.vhlh@gmail.com" class="contact-btn">
+                        <i class="fas fa-envelope"></i> Email
+                    </a>
+                    <a href="https://wa.me/5561983773112" target="_blank" rel="noopener" class="contact-btn">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===========================
+             GRID PRINCIPAL
+             =========================== -->
+        <div class="main-grid">
+
+            <!-- COLUNA ESQUERDA -->
+            <div class="column">
+
+                <!-- Resumo Profissional -->
+                <section class="card fade-in">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-circle"></i>
+                        <span data-pt="Resumo Profissional" data-en="Professional Summary">Resumo Profissional</span>
+                    </h2>
+                    <p class="card-text" data-pt="Analista de Dados com forte viés de negócio e expertise técnica em <b>Python, SQL e Power BI</b>. Tenho um histórico comprovado em desenvolvimento de soluções de Business Intelligence que saem do zero até a implementação final." data-en="Data Analyst with a strong business focus and technical expertise in <b>Python, SQL, and Power BI</b>. I have a proven track record in developing Business Intelligence solutions from scratch through to final implementation.">
+                        Analista de Dados com forte viés de negócio e expertise técnica em <b>Python, SQL e Power BI</b>. Tenho um histórico comprovado em desenvolvimento de soluções de Business Intelligence que saem do zero até a implementação final.
+                    </p>
+                </section>
+
+                <!-- Experiência Profissional -->
+                <section class="card fade-in">
+                    <h2 class="card-title">
+                        <i class="fas fa-briefcase"></i>
+                        <span data-pt="Experiência Profissional" data-en="Work Experience">Experiência Profissional</span>
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="job-title" data-pt="Prestação de Serviços Terceirizados" data-en="Outsourced Services Provider">Prestação de Serviços Terceirizados</div>
+                            <div class="company-name">
+                                <i class="fas fa-building"></i>
+                                <span data-pt="M5 Segurança • Diversos Órgãos Públicos" data-en="M5 Security • Various Public Agencies">M5 Segurança • Diversos Órgãos Públicos</span>
+                            </div>
+                            <div class="job-period">2016 — 2025</div>
+                            <p class="job-desc" data-pt="Gestão de operações e processos administrativos em ambientes de alta complexidade (BBTS, Banco Central, INCRA, CFO). Desenvolvimento de habilidades em gestão de crises, conformidade de processos e suporte logístico." data-en="Management of operations and administrative processes in high-complexity environments (BBTS, Central Bank, INCRA, CFO). Development of skills in crisis management, process compliance, and logistical support.">
+                                Gestão de operações e processos administrativos em ambientes de alta complexidade (BBTS, Banco Central, INCRA, CFO). Desenvolvimento de habilidades em gestão de crises, conformidade de processos e suporte logístico.
+                            </p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="job-title" data-pt="Assistente Administrativo" data-en="Administrative Assistant">Assistente Administrativo</div>
+                            <div class="company-name">
+                                <i class="fas fa-building"></i>
+                                <span>Rio Doce Construções</span>
+                            </div>
+                            <div class="job-period">2012 — 2015</div>
+                            <p class="job-desc" data-pt="Otimização de rotinas administrativas e controle financeiro. Responsável pela organização documental e suporte direto à gestão financeira em projetos de construção civil." data-en="Optimization of administrative routines and financial control. Responsible for document organization and direct support to financial management in civil construction projects.">
+                                Otimização de rotinas administrativas e controle financeiro. Responsável pela organização documental e suporte direto à gestão financeira em projetos de construção civil.
+                            </p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="job-title" data-pt="Militar (Soldado)" data-en="Military (Soldier)">Militar (Soldado)</div>
+                            <div class="company-name">
+                                <i class="fas fa-shield-alt"></i>
+                                <span data-pt="Exército Brasileiro (HFA e QGEx)" data-en="Brazilian Army (HFA & QGEx)">Exército Brasileiro (HFA e QGEx)</span>
+                            </div>
+                            <div class="job-period">2007 — 2011</div>
+                            <p class="job-desc" data-pt="Atuação na Seção de Inteligência e Segurança. Disciplina, rigor operacional e gestão de informações confidenciais aplicadas a projetos de engenharia militar." data-en="Served in the Intelligence and Security Section. Discipline, operational rigor, and management of confidential information applied to military engineering projects.">
+                                Atuação na Seção de Inteligência e Segurança. Disciplina, rigor operacional e gestão de informações confidenciais aplicadas a projetos de engenharia militar.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projetos Recentes -->
+                <section class="card fade-in">
+                    <div class="projects-header">
+                        <h2 class="card-title" style="margin-bottom: 0;">
+                            <i class="fas fa-rocket"></i>
+                            <span data-pt="Projetos Recentes" data-en="Recent Projects">Projetos Recentes</span>
+                        </h2>
+                        <span class="projects-count"><strong>07</strong> <span data-pt="projetos" data-en="projects">projetos</span></span>
+                    </div>
+                    <div class="projects-grid">
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-book"></i></span>
+                                    Nexus Manual
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Documentação" data-en="Documentation">Documentação</span>
+                            <p class="project-desc" data-pt="Plataforma de documentação e gestão de conhecimento." data-en="Documentation and knowledge management platform.">Plataforma de documentação e gestão de conhecimento.</p>
+                            <a href="https://www.nexus-manual.com.br" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver Projeto" data-en="View Project">Ver Projeto</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fab fa-bitcoin"></i></span>
+                                    Market Crypto
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Finanças" data-en="Finance">Finanças</span>
+                            <p class="project-desc" data-pt="Dashboards financeiros em tempo real com API." data-en="Real-time financial dashboards with API integration.">Dashboards financeiros em tempo real com API.</p>
+                            <a href="https://marketcrypto.streamlit.app/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver App" data-en="View App">Ver App</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-graduation-cap"></i></span>
+                                    Aprovado
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Educação" data-en="Education">Educação</span>
+                            <p class="project-desc" data-pt="Plataforma de estudos para concursos com dashboard de métricas, cronômetro, revisão espaçada e insights personalizados." data-en="Study platform for competitive exams with metrics dashboard, timer, spaced repetition, and personalized insights.">Plataforma de estudos para concursos com dashboard de métricas, cronômetro, revisão espaçada e insights personalizados.</p>
+                            <a href="https://organize-o-estudo.rd-tec.dev.br/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver Projeto" data-en="View Project">Ver Projeto</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-square-root-variable"></i></span>
+                                    PD Notáveis
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Educação" data-en="Education">Educação</span>
+                            <p class="project-desc" data-pt="Ferramenta interativa que ensina produtos notáveis (quadrado da soma/diferença, cubos) com teoria, laboratório manipulável e quiz." data-en="Interactive tool that teaches notable products (square of sum/difference, cubes) with theory, manipulable lab, and quiz.">Ferramenta interativa que ensina produtos notáveis (quadrado da soma/diferença, cubos) com teoria, laboratório manipulável e quiz.</p>
+                            <a href="http://pd-notaveis.rd-tec.dev.br/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver Projeto" data-en="View Project">Ver Projeto</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-shapes"></i></span>
+                                    CurióMetrics
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Geometria" data-en="Geometry">Geometria</span>
+                            <p class="project-desc" data-pt="App focado em Pitágoras e geometria euclidiana com laboratório interativo de triângulos, simulações de trigonometria e gamificação com XP." data-en="App focused on Pythagoras and Euclidean geometry with interactive triangle lab, trigonometry simulations, and XP-based gamification.">App focado em Pitágoras e geometria euclidiana com laboratório interativo de triângulos, simulações de trigonometria e gamificação com XP.</p>
+                            <a href="http://geometria-app.nexus-manual.com.br/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver App" data-en="View App">Ver App</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-chart-pie"></i></span>
+                                    Índice Brasil
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Economia" data-en="Economics">Economia</span>
+                            <p class="project-desc" data-pt="Plataforma que explica didaticamente indicadores econômicos brasileiros (SELIC, IPCA, PIB, desemprego) com analogias e simuladores práticos." data-en="Platform that didactically explains Brazilian economic indicators (SELIC, IPCA, GDP, unemployment) with analogies and practical simulators.">Plataforma que explica didaticamente indicadores econômicos brasileiros (SELIC, IPCA, PIB, desemprego) com analogias e simuladores práticos.</p>
+                            <a href="http://indice_brasil.nexus-manual.com.br/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver Projeto" data-en="View Project">Ver Projeto</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-name">
+                                    <span class="project-icon"><i class="fas fa-shield-halved"></i></span>
+                                    DF Seguro
+                                </div>
+                                <i class="fas fa-arrow-up-right-from-square project-external"></i>
+                            </div>
+                            <span class="project-tag" data-pt="Segurança Pública" data-en="Public Safety">Segurança Pública</span>
+                            <p class="project-desc" data-pt="Painel de dados sobre segurança pública do Distrito Federal, com análises e indicadores em tempo real." data-en="Data dashboard on public safety in the Federal District, with real-time analysis and indicators.">Painel de dados sobre segurança pública do Distrito Federal, com análises e indicadores em tempo real.</p>
+                            <a href="https://dfseguro.streamlit.app/" target="_blank" rel="noopener" class="project-link">
+                                <span data-pt="Ver App" data-en="View App">Ver App</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="column">
+
+                <!-- Skills -->
+                <section class="card fade-in">
+                    <div class="skills-section">
+                        <h3 class="skills-section-title">
+                            <i class="fas fa-code"></i>
+                            <span data-pt="Hard Skills" data-en="Hard Skills">Hard Skills</span>
+                        </h3>
+                        <div class="tags-container">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">SQL</span>
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">Power BI</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag" data-pt="Excel Avançado" data-en="Advanced Excel">Excel Avançado</span>
+                            <span class="tech-tag">ETL</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-section soft">
+                        <h3 class="skills-section-title">
+                            <i class="fas fa-brain"></i>
+                            <span data-pt="Soft Skills" data-en="Soft Skills">Soft Skills</span>
+                        </h3>
+                        <div class="tags-container">
+                            <span class="tech-tag" data-pt="Resolução de Problemas" data-en="Problem Solving">Resolução de Problemas</span>
+                            <span class="tech-tag" data-pt="Comunicação Técnica" data-en="Technical Communication">Comunicação Técnica</span>
+                            <span class="tech-tag" data-pt="Autodidata" data-en="Self-learner">Autodidata</span>
+                            <span class="tech-tag" data-pt="Adaptabilidade" data-en="Adaptability">Adaptabilidade</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Formação -->
+                <section class="card fade-in">
+                    <h2 class="card-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span data-pt="Formação" data-en="Education">Formação</span>
+                    </h2>
+
+                    <div class="education-item">
+                        <div class="education-degree">
+                            <i class="fas fa-chart-line"></i>
+                            <span data-pt="Ciência de Dados" data-en="Data Science">Ciência de Dados</span>
+                        </div>
+                        <div class="education-school" data-pt="Universidade Estácio" data-en="Estácio de Sá University">Universidade Estácio</div>
+                        <div class="education-period">
+                            <i class="far fa-calendar"></i>
+                            2023 — 2026
+                            <span class="status-badge" data-pt="Cursando" data-en="In Progress">Cursando</span>
+                        </div>
+                    </div>
+
+                    <div class="education-item">
+                        <div class="education-degree">
+                            <i class="fas fa-coins"></i>
+                            <span data-pt="Gestão Financeira" data-en="Financial Management">Gestão Financeira</span>
+                        </div>
+                        <div class="education-school">Unopar</div>
+                        <div class="education-period">
+                            <i class="far fa-calendar"></i>
+                            2016 — 2020
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Idiomas -->
+                <section class="card fade-in">
+                    <h2 class="card-title">
+                        <i class="fas fa-globe"></i>
+                        <span data-pt="Idiomas" data-en="Languages">Idiomas</span>
+                    </h2>
+
+                    <div class="language-item">
+                        <div class="language-header">
+                            <span class="language-name">
+                                <i class="fas fa-flag"></i>
+                                <span data-pt="Português" data-en="Portuguese">Português</span>
+                            </span>
+                            <span class="language-level" data-pt="Nativo" data-en="Native">Nativo</span>
+                        </div>
+                        <div class="language-bar">
+                            <div class="language-bar-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="language-item">
+                        <div class="language-header">
+                            <span class="language-name">
+                                <i class="fas fa-flag"></i>
+                                <span data-pt="Inglês" data-en="English">Inglês</span>
+                            </span>
+                            <span class="language-level" data-pt="Técnico" data-en="Technical">Técnico</span>
+                        </div>
+                        <div class="language-bar">
+                            <div class="language-bar-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- ===========================
+             FOOTER
+             =========================== -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div data-pt="Desenvolvido com" data-en="Built with">
+                    <span data-pt="Desenvolvido com " data-en="Built with ">Desenvolvido com </span><span class="footer-heart"><i class="fas fa-heart"></i></span><span data-pt=" por Rodrigo Silva" data-en=" by Rodrigo Silva"> por Rodrigo Silva</span>
+                </div>
+                <div class="footer-tech">
+                    <span>HTML</span> + <span>CSS</span> + <span>JavaScript</span> • 2025
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        /* ==========================================
+           1. SISTEMA DE TRADUÇÃO PT / EN
+           ========================================== */
+        let currentLang = localStorage.getItem('cv-lang') || 'pt';
+
+        const langToggle = document.getElementById('langToggle');
+        const langFlag = document.getElementById('langFlag');
+        const langCurrent = document.getElementById('langCurrent');
+        const langOther = document.getElementById('langOther');
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('cv-lang', lang);
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+
+            // Atualiza todos os elementos com data-pt/data-en
+            document.querySelectorAll('[data-pt][data-en]').forEach(el => {
+                const newText = el.getAttribute('data-' + lang);
+                if (newText !== null) {
+                    // Usa innerHTML para preservar tags como <strong> e <b>
+                    el.innerHTML = newText;
+                }
+            });
+
+            // Atualiza o botão de toggle
+            if (lang === 'pt') {
+                langFlag.textContent = '🇧🇷';
+                langCurrent.textContent = 'PT';
+                langOther.textContent = 'EN';
+                document.title = 'Rodrigo Silva | Analista de Dados';
+            } else {
+                langFlag.textContent = '🇺🇸';
+                langCurrent.textContent = 'EN';
+                langOther.textContent = 'PT';
+                document.title = 'Rodrigo Silva | Data Analyst';
+            }
+
+            // Atualiza o title do status indicator
+            const statusEl = document.querySelector('.profile-status');
+            if (statusEl) {
+                statusEl.title = lang === 'pt' ? 'Disponível para oportunidades' : 'Open to opportunities';
+            }
+
+            // Atualiza o title do botão de upload
+            const uploadLabel = document.querySelector('.photo-upload-btn');
+            if (uploadLabel) {
+                uploadLabel.title = lang === 'pt' ? 'Enviar foto / Upload photo' : 'Upload photo';
+            }
+        }
+
+        langToggle.addEventListener('click', () => {
+            const newLang = currentLang === 'pt' ? 'en' : 'pt';
+            applyLanguage(newLang);
+            showToast(
+                newLang === 'pt' ? 'Idioma alterado para Português' : 'Language switched to English',
+                'fa-language'
+            );
+        });
+
+        // Aplica idioma salvo ao carregar
+        applyLanguage(currentLang);
+
+        /* ==========================================
+           2. SISTEMA DE UPLOAD DE FOTO
+           ========================================== */
+        const photoInput = document.getElementById('photoInput');
+        const profilePic = document.getElementById('profilePic');
+
+        function setProfilePhoto(dataUrl, isFile = false) {
+            profilePic.innerHTML = `<img src="${dataUrl}" alt="Rodrigo Silva">`;
+        }
+
+        // Carrega foto salva no localStorage (prioridade mais alta)
+        const savedPhoto = localStorage.getItem('cv-photo');
+        if (savedPhoto) {
+            setProfilePhoto(savedPhoto);
+        } else {
+            // Tenta carregar imagem automática da mesma pasta do HTML
+            // Ordem de tentativa: PNG > JPG > JPEG > WEBP
+            const candidateFiles = [
+                'minha_foto.png',
+                'minha_foto.jpg',
+                'minha_foto.jpeg',
+                'minha_foto.webp',
+                'foto.png',
+                'foto.jpg',
+                'foto.jpeg',
+                'rodrigo.png',
+                'rodrigo.jpg'
+            ];
+
+            function tryLoadNextPhoto(index) {
+                if (index >= candidateFiles.length) return;
+                const fileName = candidateFiles[index];
+                const testImg = new Image();
+                testImg.onload = () => {
+                    setProfilePhoto(testImg.src);
+                    console.log(`✅ Foto carregada automaticamente: ${fileName}`);
+                };
+                testImg.onerror = () => {
+                    // Tenta o próximo candidato
+                    tryLoadNextPhoto(index + 1);
+                };
+                testImg.src = fileName;
+            }
+            tryLoadNextPhoto(0);
+        }
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validação de tipo
+            if (!file.type.startsWith('image/')) {
+                showToast(
+                    currentLang === 'pt' ? 'Por favor, selecione um arquivo de imagem' : 'Please select an image file',
+                    'fa-exclamation-triangle'
+                );
+                return;
+            }
+
+            // Validação de tamanho (máx 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast(
+                    currentLang === 'pt' ? 'Imagem muito grande (máx 5MB)' : 'Image too large (max 5MB)',
+                    'fa-exclamation-triangle'
+                );
+                return;
+            }
+
+            // Redimensiona a imagem para otimizar (400x400)
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const size = 400;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+
+                    // Cover (cobre o canvas inteiro mantendo proporção)
+                    const minDim = Math.min(img.width, img.height);
+                    const sx = (img.width - minDim) / 2;
+                    const sy = (img.height - minDim) / 2;
+
+                    ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+
+                    const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                    setProfilePhoto(resizedDataUrl);
+
+                    // Salva no localStorage (persiste entre sessões)
+                    try {
+                        localStorage.setItem('cv-photo', resizedDataUrl);
+                    } catch (err) {
+                        console.warn('Não foi possível salvar a foto no localStorage:', err);
+                    }
+
+                    showToast(
+                        currentLang === 'pt' ? 'Foto atualizada com sucesso!' : 'Photo updated successfully!',
+                        'fa-check-circle'
+                    );
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        /* ==========================================
+           3. TOAST NOTIFICATION
+           ========================================== */
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+        let toastTimeout;
+
+        function showToast(message, icon = 'fa-check-circle') {
+            clearTimeout(toastTimeout);
+            toast.querySelector('i').className = `fas ${icon}`;
+            toastMsg.textContent = message;
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2800);
+        }
+
+        /* ==========================================
+           4. TILT EFFECT nos cards de projeto
+           ========================================== */
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `translateY(-3px) perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        /* ==========================================
+           5. TRACKING DE CLIQUES (analytics futuro)
+           ========================================== */
+        document.querySelectorAll('.contact-btn, .project-link').forEach(link => {
+            link.addEventListener('click', () => {
+                console.log('🔗 Link clicado:', link.textContent.trim(), '→', link.href);
+            });
+        });
+
+        /* ==========================================
+           6. EASTER EGG no console
+           ========================================== */
+        console.log('%c📊 Rodrigo Silva | Data Analyst', 'font-size: 20px; font-weight: bold; color: #38bdf8;');
+        console.log('%cInteressado em colaborar? rodrigo.vhlh@gmail.com', 'font-size: 13px; color: #a3a3a3;');
+        console.log('%c💡 Dica: clique no botão de idioma no canto superior direito para traduzir!', 'font-size: 12px; color: #818cf8;');
+    </script>
+</body>
+</html>
